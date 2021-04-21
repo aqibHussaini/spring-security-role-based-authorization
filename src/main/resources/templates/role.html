@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+<head>
+    <meta charset="UTF-8">
+    <title>Roles View</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+<div class="container mt-5"  sec:authorize="hasAnyAuthority('viewer','Admin')">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark text-white">
+        <tr sec:authorize="hasRole('Admin')">
+            <form method="post" action="/save-role">
+                <th scope="col">ID</th>
+                <th scope="col"><input class="form-control" name="Role" placeholder="Enter Role"></th>
+                <th scope="col"><button class="btn btn-default">save</button></th>
+            </form>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="role : ${roles}">
+            <th scope="row" th:text="${role.getId()}"></th>
+            <td th:text="${role.getRole()}"></td>
+            <td sec:authorize="hasAuthority('Admin')"><a href="#" class="btn btn-success">Update</a><a href="#" class="btn btn-danger">Delete</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
